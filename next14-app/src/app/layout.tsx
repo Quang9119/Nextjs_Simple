@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 // import './globals.css';
+<<<<<<< HEAD
 import 'bootstrap/dist/css/bootstrap.min.css';
+=======
+
+>>>>>>> 707ab7863bf426f46906266df4d176d73cd48e11
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
