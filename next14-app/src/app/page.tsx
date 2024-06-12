@@ -1,4 +1,5 @@
 'use client';
+import AppTable from '@/components/app.table';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { Table } from 'react-bootstrap';
@@ -12,42 +13,20 @@ export default function Home() {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
   });
-  console.log(data);
+  if (!data) {
+    return <div>Loading</div>;
+  }
+  if (error) {
+    return <div>Error</div>;
+  }
+
   return (
     <main>
       <div>
         <div>{data?.length}</div>
         <h1>Home page </h1>
 
-        <Table striped>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Username</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td colSpan={2}>Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </Table>
+        <AppTable blogs={data}/>
       </div>
     </main>
   );
