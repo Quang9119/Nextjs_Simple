@@ -1,5 +1,8 @@
 import { use, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+import { mutate } from 'swr';
+import { API_URL_GET_BLOGS, API_URL_POST_BLOG } from './api/api';
 
 interface AddBlogModalProps {
   showModal: boolean;
@@ -19,7 +22,24 @@ const AddBlogModal = (props: AddBlogModalProps) => {
     setContent('');
   };
   const handleSubmit = () => {
-    console.log('title,author,content:' + title, author, content);
+    fetch(API_URL_POST_BLOG, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title, author, content }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res) {
+          toast.success('Blog added successfully');
+          mutate(API_URL_GET_BLOGS);
+          handleClose();
+        } else {
+          toast.error('Failed to add blog');
+        }
+      });
   };
   return (
     <Modal show={showModal} onHide={handleClose} backdrop="static" keyboard={false} size="lg">

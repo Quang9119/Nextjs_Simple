@@ -30,24 +30,26 @@ const AppTable = (props: Iprops) => {
           </tr>
         </thead>
         <tbody>
-          {blogs.map((blog) => {
-            return (
-              <tr key={blog.id}>
-                <td>{blog.id}</td>
-                <td>{blog.title}</td>
-                <td>{blog.author}</td>
-                {/* <td>{blog.content}</td> */}
-                <td>
-                  <Button variant="info">View</Button>
+          {blogs
+            ?.sort((a, b) => b.id - a.id)
+            .map((blog) => {
+              return (
+                <tr key={blog.id}>
+                  <td>{blog.id}</td>
+                  <td>{blog.title}</td>
+                  <td>{blog.author}</td>
+                  {/* <td>{blog.content}</td> */}
+                  <td>
+                    <Button variant="info">View</Button>
 
-                  <Button variant="primary" className="mx-3">
-                    Edit
-                  </Button>
-                  <Button variant="danger">Delete</Button>
-                </td>
-              </tr>
-            );
-          })}
+                    <Button variant="primary" className="mx-3">
+                      Edit
+                    </Button>
+                    <Button variant="danger">Delete</Button>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </Table>
       <AddBlogModal showModal={showModal} setShowModal={setShowModal} />
