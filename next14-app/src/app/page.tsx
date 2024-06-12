@@ -1,8 +1,9 @@
 'use client';
+import AddBlogModal from '@/components/AddBlogModal';
 import AppTable from '@/components/app.table';
 import Link from 'next/link';
-import { useEffect } from 'react';
-import { Table } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { Button, Spinner, Table } from 'react-bootstrap';
 import useSWR from 'swr';
 export default function Home() {
   const API_URL_GET_BLOGS = 'http://localhost:8000/blogs';
@@ -14,7 +15,11 @@ export default function Home() {
     revalidateOnReconnect: false,
   });
   if (!data) {
-    return <div>Loading</div>;
+    return (
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    );
   }
   if (error) {
     return <div>Error</div>;
@@ -23,10 +28,7 @@ export default function Home() {
   return (
     <main>
       <div>
-        <div>{data?.length}</div>
-        <h1>Home page </h1>
-
-        <AppTable blogs={data}/>
+        <AppTable blogs={data} />
       </div>
     </main>
   );
